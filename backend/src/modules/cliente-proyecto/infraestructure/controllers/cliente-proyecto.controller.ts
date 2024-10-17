@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, NotFoundException} from '@nestjs/common';
 import { ClienteProyectoService } from '../../application/cliente-proyecto.service';
 import { CreateClienteProyectoDto, UpdateClienteProyectoDto } from '../../application/dtos/cliente-proyecto.dto';
 
@@ -7,8 +7,24 @@ export class ClienteProyectoController {
   constructor(private readonly clienteProyectoService: ClienteProyectoService) {}
 
   @Post()
-  create(@Body() createClienteProyectoDto: CreateClienteProyectoDto) {
-    return this.clienteProyectoService.create(createClienteProyectoDto);
+  async create(@Body() createClienteProyectoDto: CreateClienteProyectoDto) {
+    try {
+      console.log('Received create request with DTO:', createClienteProyectoDto);
+      const result = await this.clienteProyectoService.create(createClienteProyectoDto);
+      console.log('Create operation result:', result);
+      return result;
+    } catch (error) {
+      console.error('Error in create method:', error);
+      if (error instanceof NotFoundException) {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+      }
+      throw new HttpException('Error creating cliente-proyecto: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  
+  @Get()
+  findAll() {
+    return this.clienteProyectoService.findAll();
   }
 
   @Get(':id')
@@ -17,7 +33,8 @@ export class ClienteProyectoController {
   }
 
   @Get('proyecto/:proyectoId')
-  findAllForProyecto(@Param('proyectoId') proyectoId: string) {
+  async getClientesForProyecto(@Param('proyectoId') proyectoId: string) {
+    console.log(`Recibida solicitud para proyecto ID: ${proyectoId}`);
     return this.clienteProyectoService.findAllForProyecto(+proyectoId);
   }
 

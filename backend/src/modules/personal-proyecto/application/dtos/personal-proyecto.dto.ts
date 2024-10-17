@@ -1,5 +1,7 @@
 import { IsNumber, IsDate, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
+import { StaffDto } from 'src/modules/staff/application/dtos/staff.dto';
+import { CreateProyectoDto } from 'src/modules/proyectos/application/dtos/proyecto.dto';
 
 export class CreatePersonalProyectoDto {
   @IsNumber()
@@ -7,6 +9,9 @@ export class CreatePersonalProyectoDto {
 
   @IsNumber()
   proyectoId: number;
+
+  personal?: StaffDto;
+  proyecto?: CreateProyectoDto;
 
   @IsDate()
   @Type(() => Date)
@@ -23,6 +28,9 @@ export class UpdatePersonalProyectoDto {
   @IsNumber()
   proyectoId?: number;
 
+  personal?: StaffDto;
+  proyecto?: CreateProyectoDto;
+
   @IsDate()
   @Type(() => Date)
   fechaAsignacion?: Date;
@@ -37,4 +45,6 @@ export class PersonalProyectoDto {
   proyectoId: number;
   fechaAsignacion: Date;
   rol: string;
+  personal?: StaffDto;
+  proyecto?: CreateProyectoDto;
 }

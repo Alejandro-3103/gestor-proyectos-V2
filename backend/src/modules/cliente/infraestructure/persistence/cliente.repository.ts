@@ -12,6 +12,10 @@ export class ClienteRepository implements ClienteRepositoryInterface {
     private readonly repository: Repository<Cliente>,
   ) {}
 
+  async findOneById(id: number): Promise<Cliente | null> {
+    return this.repository.findOne({ where: { id } });
+  }
+  
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
     const cliente = this.repository.create(createClienteDto);
     return this.repository.save(cliente);

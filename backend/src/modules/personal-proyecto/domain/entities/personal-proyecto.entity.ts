@@ -8,12 +8,20 @@ export class PersonalProyecto {
   id: number;
   
   @ManyToOne(() => Staff, staff => staff.personalProyectos, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'personalId' })
   personal: Staff;
   
+  @Column()
+  personalId: number;
+
   @ManyToOne(() => Proyecto, proyecto => proyecto.personalProyectos, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'proyectoId' })
   proyecto: Proyecto;
 
-  @Column({ name: 'fecha_asignacion' })
+  @Column()
+  proyectoId: number;
+
+  @Column({ name: 'fechaAsignacion' })
   fechaAsignacion: Date;
 
   @Column()

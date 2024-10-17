@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, HttpException, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { ClienteProyectoRepositoryInterface } from '../domain/repositories/cliente-proyecto.repository.interface';
 import { CreateClienteProyectoDto, UpdateClienteProyectoDto } from './dtos/cliente-proyecto.dto';
 import { ClienteProyecto } from '../domain/entities/cliente-proyecto.entity';
@@ -18,11 +18,15 @@ export class ClienteProyectoService {
 
   async create(createClienteProyectoDto: CreateClienteProyectoDto): Promise<ClienteProyecto> {
     const { clienteId, proyectoId } = createClienteProyectoDto;
-    const cliente = await this.clienteRepository.findOne(clienteId); 
-    const proyecto = await this.proyectoRepository.findOne(proyectoId); 
+    
+    const cliente = await this.clienteRepository.findOne(clienteId);
+    if (!cliente) {
+      throw new NotFoundException(`Cliente with ID ${clienteId} not found`);
+    }
   
-    if (!cliente || !proyecto) {
-      throw new NotFoundException('Cliente or Proyecto not found');
+    const proyecto = await this.proyectoRepository.findOne({ where: { id: proyectoId } });
+    if (!proyecto) {
+      throw new NotFoundException(`Proyecto with ID ${proyectoId} not found`);
     }
     
     const clienteProyecto = await this.clienteProyectoRepository.create({
@@ -31,42 +35,36 @@ export class ClienteProyectoService {
       fechaAsignacion: new Date(),
     });
     
-    
     return await this.clienteProyectoRepository.save(clienteProyecto);
   }
+
+  async findAll(): Promise<ClienteProyecto[]> {
+    return this.clienteProyectoRepository.findAll();
+  }
+
   async findOne(id: number): Promise<ClienteProyecto> {
-    const clienteProyecto = await this.clienteProyectoRepository.findOne({
-      where: { id },
-      relations: ['cliente', 'proyecto'],
-    });
+    const clienteProyecto = await this.clienteProyectoRepository.findOneById(id, ['cliente', 'proyecto']);
     if (!clienteProyecto) {
       throw new NotFoundException(`ClienteProyecto with ID ${id} not found`);
     }
     return clienteProyecto;
   }
 
+  async remove(id: number): Promise<void> {
+    const clienteProyecto = await this.clienteProyectoRepository.findOneById(id, ['cliente', 'proyecto']);
+    if (!clienteProyecto) {
+      throw new NotFoundException(`ClienteProyecto with ID ${id} not found`);
+    }
+    await this.clienteProyectoRepository.remove(clienteProyecto);
+  }
+  
   async update(id: number, updateClienteProyectoDto: UpdateClienteProyectoDto): Promise<ClienteProyecto> {
     const clienteProyecto = await this.findOne(id);
     Object.assign(clienteProyecto, updateClienteProyectoDto);
     return await this.clienteProyectoRepository.save(clienteProyecto);
   }
 
-  async remove(id: number): Promise<void> {
-    const clienteProyecto = await this.clienteProyectoRepository.findOne({
-      where: { id },
-      relations: ['cliente', 'proyecto'],
-    });
-    if (!clienteProyecto) {
-      throw new NotFoundException(`ClienteProyecto with ID ${id} not found`);
-    }
-    await this.clienteProyectoRepository.remove(clienteProyecto);
-  }
-
   async findAllForProyecto(proyectoId: number): Promise<ClienteProyecto[]> {
-    return this.clienteProyectoRepository.find({
-      where: { proyecto: { id: proyectoId } },
-      relations: ['cliente'],
-    });
+    return this.clienteProyectoRepository.findAllForProyecto(proyectoId);
   }
-
 }

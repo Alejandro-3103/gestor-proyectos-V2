@@ -8,13 +8,19 @@ export class ClienteProyecto {
   id: number;
 
   @ManyToOne(() => Cliente, cliente => cliente.clienteProyectos)
-  @JoinColumn({ name: 'cliente_id' })
+  @JoinColumn({ name: 'clienteId' })
   cliente: Cliente;
 
+  @Column()
+  clienteId: number;
+
   @ManyToOne(() => Proyecto, proyecto => proyecto.clienteProyectos)
-  @JoinColumn({ name: 'proyecto_id' })
+  @JoinColumn({ name: 'proyectoId' })
   proyecto: Proyecto;
 
-  @Column({ name: 'fecha_asignacion' })
+  @Column()
+  proyectoId: number;
+
+  @Column()
   fechaAsignacion: Date;
 }

@@ -21,6 +21,6 @@ import { PersonalProyecto } from '../personal-proyecto/domain/entities/personal-
       useClass: PersonalProyectoRepository,
     },
   ],
-  exports: [StaffService],
+  exports: ['StaffRepositoryInterface', StaffService],
 })
 export class StaffModule {}

@@ -11,6 +11,10 @@ export class ClienteProyectoRepository implements ClienteProyectoRepositoryInter
     @InjectRepository(ClienteProyecto)
     private repository: Repository<ClienteProyecto>,
   ) {}
+  
+  async findOneById(id: number, relations?: string[]): Promise<ClienteProyecto | null> {
+    return this.repository.findOne({ where: { id }, relations });
+  }
 
   async create(createClienteProyectoDto: CreateClienteProyectoDto): Promise<ClienteProyecto> {
     const clienteProyecto = this.repository.create(createClienteProyectoDto);
@@ -18,23 +22,32 @@ export class ClienteProyectoRepository implements ClienteProyectoRepositoryInter
   }
 
   async findAll(): Promise<ClienteProyecto[]> {
-    return this.repository.find();
+    return this.repository.find({
+      relations: ['cliente', 'proyecto'],
+    });
   }
 
-  async findOne(id: number): Promise<ClienteProyecto> {
-    return this.repository.findOne({ where: { id } });
+  async findAllForProyecto(proyectoId: number): Promise<ClienteProyecto[]> {
+    return this.repository.find({
+      where: { proyecto: { id: proyectoId } },
+      relations: ['cliente'],
+    });
+  }
+
+  async findOne(options: FindManyOptions<ClienteProyecto>): Promise<ClienteProyecto | null> {
+    return this.repository.findOne(options);
   }
 
   async update(id: number, updateClienteProyectoDto: UpdateClienteProyectoDto): Promise<ClienteProyecto> {
     await this.repository.update(id, updateClienteProyectoDto);
-    return this.findOne(id);
+    return this.findOne({ where: { id } });
   }
 
   async remove(clienteProyecto: ClienteProyecto | ClienteProyecto[]): Promise<ClienteProyecto | ClienteProyecto[]> {
     if (Array.isArray(clienteProyecto)) {
       return this.repository.remove(clienteProyecto);
     } else {
-      return this.repository.remove(clienteProyecto);
+      return this.repository.remove([clienteProyecto]).then(result => result[0]);
     }
   }
 
@@ -42,7 +55,6 @@ export class ClienteProyectoRepository implements ClienteProyectoRepositoryInter
     return this.repository.delete(criteria);
   }
 
-  // Add these methods if they're not already present
   async find(options?: FindManyOptions<ClienteProyecto>): Promise<ClienteProyecto[]> {
     return this.repository.find(options);
   }

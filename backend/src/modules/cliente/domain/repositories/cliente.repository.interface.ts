@@ -9,4 +9,5 @@ export interface ClienteRepositoryInterface {
   update(id: number, UpdateClienteDto: Partial<Cliente>): Promise<Cliente>;
   remove(cliente: Cliente): Promise<Cliente>;
   delete(criteria: any): Promise<DeleteResult>;
+  findOneById(id: number): Promise<Cliente | null>;
 }

@@ -5,6 +5,7 @@ import { ClienteProyectoService } from './application/cliente-proyecto.service';
 import { ClienteProyectoRepository } from './infraestructure/persistence/cliente-proyecto.repository';
 import { ClienteModule } from '../cliente/cliente.module';
 import { ProyectosModule } from '../proyectos/proyectos.module';
+import { ClienteProyectoController } from './infraestructure/controllers/cliente-proyecto.controller';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ProyectosModule } from '../proyectos/proyectos.module';
     ClienteModule,
     forwardRef(() => ProyectosModule),
   ],
+  controllers: [ClienteProyectoController], // Añade esta línea
   providers: [
     ClienteProyectoService,
     {

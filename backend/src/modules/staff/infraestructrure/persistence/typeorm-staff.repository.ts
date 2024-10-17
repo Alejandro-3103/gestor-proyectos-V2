@@ -19,7 +19,7 @@ export class TypeOrmStaffRepository implements StaffRepositoryInterface {
     return this.staffRepository.find();
   }
 
-  async findOne(options: FindOneOptions<Staff>): Promise<Staff | undefined> {
+  async findOne(options: FindOneOptions<Staff>): Promise<Staff | null> {
     return this.staffRepository.findOne(options);
   }
 

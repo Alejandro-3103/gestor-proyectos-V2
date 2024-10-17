@@ -12,6 +12,10 @@ export class PersonalProyectoRepository implements PersonalProyectoRepositoryInt
     private readonly repository: Repository<PersonalProyecto>,
   ) {}
 
+  async findOneById(id: number, relations?: string[]): Promise<PersonalProyecto | null> {
+    return this.repository.findOne({ where: { id }, relations });
+  }
+
   async create(createPersonalProyectoDto: CreatePersonalProyectoDto): Promise<PersonalProyecto> {
     const personalProyecto = this.repository.create(createPersonalProyectoDto);
     return this.repository.save(personalProyecto);
@@ -19,6 +23,13 @@ export class PersonalProyectoRepository implements PersonalProyectoRepositoryInt
 
   async findAll(): Promise<PersonalProyecto[]> {
     return this.repository.find({ relations: ['personal', 'proyecto'] });
+  }
+
+  async findAllForProyecto(proyectoId: number): Promise<PersonalProyecto[]> {
+    return this.repository.find({
+      where: { proyecto: { id: proyectoId } },
+      relations: ['personal'],
+    });
   }
 
   async findOne(id: number): Promise<PersonalProyecto> {
@@ -42,7 +53,7 @@ export class PersonalProyectoRepository implements PersonalProyectoRepositoryInt
     if (Array.isArray(personalProyecto)) {
       return this.repository.remove(personalProyecto);
     } else {
-      return this.repository.remove(personalProyecto);
+      return this.repository.remove([personalProyecto]).then(result => result[0]);
     }
   }
 

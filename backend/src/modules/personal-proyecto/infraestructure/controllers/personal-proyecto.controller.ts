@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { PersonalProyectoService } from '../../application/personal-proyecto.service';
 import { CreatePersonalProyectoDto, UpdatePersonalProyectoDto } from '../../application/dtos/personal-proyecto.dto';
 
@@ -16,9 +16,15 @@ export class PersonalProyectoController {
     return this.personalProyectoService.findAll();
   }
 
-  @Get(':proyectoId')
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.personalProyectoService.findOne(+id);
+  }
+  
+  @Get('personal/:proyectoId')
+  async getPersonalForProyecto(@Param('proyectoId') proyectoId: string) {
+    console.log(`Recibida solicitud para proyecto ID: ${proyectoId}`);
+    return this.personalProyectoService.findAllForProyecto(+proyectoId);
   }
 
   @Patch(':id')
@@ -27,7 +33,8 @@ export class PersonalProyectoController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.personalProyectoService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.personalProyectoService.remove(+id);
+    return { message: 'Staff removed successfully' };
   }
 }
