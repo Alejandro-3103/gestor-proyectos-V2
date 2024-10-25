@@ -4,7 +4,7 @@ import { MdEmail } from 'react-icons/md';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8">
+    <footer className="bg-gray-900 text-gray-300 py-4">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div>
@@ -42,7 +42,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-4 text-xs text-center">
           <p>&copy; {new Date().getFullYear()} DevEnviroment. Todos los derechos reservados.</p>
           <p className="mt-1">
-            <a href="/privacy-policy" className="hover:text-white transition-colors duration-300">Privacidad</a> | 
+            <a href="/privacy-policy" className="hover:text-white transition-colors duration-300">Privacidad</a>   | 
             <a href="/terms-of-service" className="hover:text-white transition-colors duration-300 ml-2">Términos</a>
           </p>
         </div>

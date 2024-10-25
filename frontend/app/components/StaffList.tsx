@@ -9,6 +9,7 @@ interface Staff {
   id: number;
   nombre: string;
   correoElectronico: string;
+  contraseña: string;
   posicion: string;
   fechaContratacion: string;
 }
@@ -29,6 +30,7 @@ function StaffDetails({ staff, onClose }: StaffDetailsProps) {
           <h3 className="text-lg leading-6 font-medium text-gray-900">{staff.nombre}</h3>
           <div className="mt-2 px-7 py-3 text-left">
             <p><strong>Email:</strong> {staff.correoElectronico}</p>
+            <p><strong>Contraseña:</strong>********</p>
             <p><strong>posicion:</strong> {staff.posicion}</p>
             <p><strong>Fecha Contrato:</strong> {staff.fechaContratacion}</p>
           </div>

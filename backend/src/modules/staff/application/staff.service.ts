@@ -1,8 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Staff } from '../domain/entities/staff.entity';
-import { CreateStaffDto, UpdateStaffDto } from './dtos/staff.dto';
+import { CreateStaffDto, StaffDto, UpdateStaffDto } from './dtos/staff.dto';
 import { StaffRepositoryInterface } from '../domain/repositories/staff.repository.interface';
 import { PersonalProyectoRepositoryInterface } from 'src/modules/personal-proyecto/domain/repositories/personal-proyecto.repository.interface';
+import { FindOneOptions } from 'typeorm';
+
 @Injectable()
 export class StaffService {
     constructor(
@@ -15,18 +17,26 @@ export class StaffService {
   async create(createStaffDto: CreateStaffDto): Promise<Staff> {
     const staff = new Staff();
     Object.assign(staff, createStaffDto);
-    return this.staffRepository.save(staff);
+    return this.staffRepository.create(staff);
   }
-
+  
   async findAll(): Promise<Staff[]> {
     return this.staffRepository.findAll();
   }
 
-  async findbyId(id: number): Promise<Staff> {
-    return this.staffRepository.findbyId(id);
+  async findOne(options: FindOneOptions<Staff>): Promise<Staff | null> {
+    return this.staffRepository.findOne(options);
   }
 
-  update(id: number, updateStaffDto: UpdateStaffDto) {
+  async findbyId(id: number): Promise<Staff> {
+    if (!id || isNaN(id)) {
+      throw new NotFoundException('Invalid staff ID');
+    }
+  
+    return this.staffRepository.findbyId(id);
+  }  
+
+  async update(id: number, updateStaffDto: UpdateStaffDto) {
     return this.staffRepository.update(id, updateStaffDto);
   }
 

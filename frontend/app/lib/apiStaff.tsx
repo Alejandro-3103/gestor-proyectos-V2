@@ -4,6 +4,7 @@ interface Staff {
   id: number;
   nombre: string;
   correoElectronico: string;
+  contraseña: string;
   posicion: string;
   fechaContratacion: string;
 }

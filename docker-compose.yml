@@ -21,6 +21,7 @@ services:
       DB_USER: admin
       DB_PASSWORD: adminpassword
       DB_NAME: gestorproyectos
+      SECRET_JWT_KEY: esto-es-una-secret-key-muypoco-larga-y-segura-11-33-42
     ports:
       - "4000:4000"
     depends_on:

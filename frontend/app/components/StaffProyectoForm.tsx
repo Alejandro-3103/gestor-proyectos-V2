@@ -113,14 +113,12 @@ const StaffProyectoForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <select
           value={selectedStaff}
-          onChange={(e) => {
-            console.log('Staff seleccionado:', e.target.value);
-            setSelectedStaff(e.target.value);
-          }}
+          onChange={(e) => setSelectedStaff(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
         >
           <option value="">Seleccione un miembro del staff</option>
           {staff.map((s) => (
@@ -131,10 +129,8 @@ const StaffProyectoForm = () => {
         </select>
         <select
           value={selectedProyecto}
-          onChange={(e) => {
-            console.log('Proyecto seleccionado:', e.target.value);
-            setSelectedProyecto(e.target.value);
-          }}
+          onChange={(e) => setSelectedProyecto(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
         >
           <option value="">Seleccione un proyecto</option>
           {proyectos.map((proyecto) => (
@@ -148,20 +144,26 @@ const StaffProyectoForm = () => {
           value={rol}
           onChange={(e) => setRol(e.target.value)}
           placeholder="Rol en el proyecto"
+          className="w-full p-2 border border-gray-300 rounded"
         />
-        <button type="submit">Asignar Staff a Proyecto</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Asignar Staff a Proyecto
+        </button>
       </form>
 
       {selectedProyecto && (
-        <div>
-          <h3>Staff asignado al proyecto:</h3>
-          <ul>
+        <div className="mt-4">
+          <h3 className="text-lg font-bold">Staff asignado al proyecto:</h3>
+          <ul className="list-disc pl-4">
             {staffAsignado.map((personalProyecto) => (
               <li key={personalProyecto.id}>
                 {personalProyecto.personal && personalProyecto.personal.nombre 
                   ? personalProyecto.personal.nombre 
                   : 'Nombre no disponible'} - Rol: {personalProyecto.rol || 'No especificado'}
-                <button onClick={() => handleRemoveStaff(personalProyecto.id)}>
+                <button
+                  onClick={() => handleRemoveStaff(personalProyecto.id)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                >
                   Remover
                 </button>
               </li>

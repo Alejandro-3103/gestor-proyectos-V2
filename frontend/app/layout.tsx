@@ -1,19 +1,27 @@
-// /app/layout.tsx
-import { Inter } from 'next/font/google';
-import { SessionProvider } from 'next-auth/react';
+// app/layout.tsx
 
-const inter = Inter({ subsets: ['latin'] });
+import './globals.css';  // Estilos globales, si tienes alguno
+import Header from './components/Header';  // Importamos el Header
+import Footer from './components/Footer';  // Importamos el Footer
+import { AuthProvider } from '../context/AuthContext';
+import LogoutButton from './components/LogoutButton';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const metadata = {
+  title: 'Gestor de Proyectos',
+  description: 'Aplicación de gestor de proyectos',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <SessionProvider>
-        <body className={inter.className}>{children}</body>
-      </SessionProvider>
+    <html lang="es">
+      <body className="layout">
+        <AuthProvider>
+          <Header  /> {/* Header */}
+            <main className="main">{children}</main> {/* El contenido de cada página */}
+            <LogoutButton />
+          <Footer /> {/* Footer */}
+        </AuthProvider>
+      </body>
     </html>
   );
 }

@@ -9,8 +9,11 @@ export class Staff {
   @Column({ nullable: false })
   nombre: string;
 
-  @Column({ name: 'correo_electronico' })
+  @Column()
   correoElectronico: string;
+
+  @Column()
+  contraseña: string;
 
   @Column()
   posicion: string;
@@ -20,4 +23,5 @@ export class Staff {
 
   @OneToMany(() => PersonalProyecto, personalProyecto => personalProyecto.personal, { cascade: true, onDelete: 'CASCADE' })
   personalProyectos: PersonalProyecto[];
+  static correoElectronico: any;
 }

@@ -1,61 +1,66 @@
-'use client';
+"use client";
 import { useState } from 'react';
-import Link from 'next/link';
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsMenuOpen(prev => !prev);
   };
 
   return (
-    <header className="bg-blue-600 text-white">
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-2xl font-bold">
-          <Link href="/">DevEnviroment</Link>
+    <header>
+      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+        <div className="flex justify-between items-center mx-auto max-w-screen-xl">
+          {/* Logo */}
+          <a href="#" className="flex items-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/6884/6884480.png" className="mr-3 h-6 sm:h-9" alt="Logo" />
+            <span className="text-xl font-semibold dark:text-white">DevEnvironment</span>
+          </a>
+          
+          {/* Menú Normal (Centrado) */}
+          <div className="hidden lg:flex lg:justify-center lg:flex-grow">
+            <ul className="flex space-x-8">
+              {['Home', 'Proyectos', 'Staff', 'Clientes', 'Asignaciones'].map((item) => (
+                <li key={item}>
+                  <a href="#" className="block py-2 text-gray-700 hover:text-blue-700 transition-colors duration-300 dark:text-gray-400 dark:hover:text-white">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Botón del menú móvil */}
+          <div className="flex items-center lg:hidden">
+            <button 
+              onClick={toggleMenu} 
+              className="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
+              aria-expanded={isMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMenuOpen ? (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* Menu for large screens */}
-        <ul className="hidden md:flex space-x-8">
-          <li><Link href="/staff">Staff</Link></li>
-          <li><Link href="/proyectos">Proyectos</Link></li>
-          <li><Link href="/clientes">Clientes</Link></li>
-        </ul>
-
-        {/* Button */}
-        <div className="hidden md:block">
-          <button className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100">
-            Crear Proyecto
-          </button>
-        </div>
-
-        {/* Hamburger menu for mobile */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-white focus:outline-none">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden bg-blue-700">
-          <ul className="flex flex-col space-y-4 p-4">
-            <li><Link href="/staff">Staff</Link></li>
-            <li><Link href="/proyectos">Proyectos</Link></li>
-            <li><Link href="/clientes">Clientes</Link></li>
-            <li>
-              <button className="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100">
-                Crear Proyecto
-              </button>
-            </li>
+        {/* Menú Responsive (centrado) */}
+        <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'} transition-all ease-in-out duration-300`}>
+          <ul className="flex flex-col items-center mt-4 space-y-4 bg-gray-800 py-4">
+            {['Home', 'Proyectos', 'Staff', 'Clientes', 'Asignaciones'].map((item) => (
+              <li key={item}>
+                <a href="#" className="block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-700 transition-colors duration-300">{item}</a>
+              </li>
+            ))}
           </ul>
         </div>
-      )}
+      </nav>
     </header>
   );
 }

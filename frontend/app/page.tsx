@@ -1,13 +1,11 @@
-import Link from 'next/link';
-import StaffTimeEntries from './components/StaffTimeEntries';
+import AuthRedirect from './components/AuthRedirect';
 
 export default function Home() {
   return (
-    <div>
-      <h1>Bienvenido al Gestor de Proyectos</h1>
-      <Link href="/clientes">Gestionar Clientes</Link>
-      <h1>Gestor de Tiempos</h1>
-      <StaffTimeEntries />
-    </div>
+      <div>
+        <AuthRedirect />
+        <h1>Dashboard</h1>
+        <p>¡Bienvenido al Dashboard, solo accesible para usuarios autenticados!</p>
+      </div>
   );
 }

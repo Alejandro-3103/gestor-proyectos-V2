@@ -13,6 +13,9 @@ export class CreateStaffDto {
   correoElectronico: string;
 
   @IsString()
+  contraseña: string;
+
+  @IsString()
   posicion: string;
 
   @IsDate()
@@ -30,6 +33,9 @@ export class UpdateStaffDto {
   correoElectronico?: string;
 
   @IsString()
+  contraseña?: string;
+
+  @IsString()
   posicion?: string;
 
   @IsDate()
@@ -45,6 +51,9 @@ export class UpdateStaffDto {
   
     @IsEmail()
     correoElectronico: string;
+
+    @IsString()
+    contraseña: string;
   
     @IsString()
     posicion: string;

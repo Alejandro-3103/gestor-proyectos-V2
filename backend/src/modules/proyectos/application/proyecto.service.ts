@@ -64,33 +64,15 @@ export class ProyectoService {
 
   async update(id: number, updateProyectoDto: UpdateProyectoDto): Promise<Proyecto> {
     const proyecto = await this.findById(id);
+  
+    // Actualizamos solo los campos que no afectan a las asignaciones
     Object.assign(proyecto, updateProyectoDto);
+    
     await this.proyectoRepository.save(proyecto);
   
-    if (updateProyectoDto.personalProyectos) {
-      await this.personalProyectoRepository.delete({ proyecto: { id } });
-      for (const pp of updateProyectoDto.personalProyectos) {
-        const personalProyecto = new PersonalProyecto();
-        personalProyecto.proyecto = proyecto; // Usa el objeto proyecto completo
-        personalProyecto.personal = { id: pp.personalId } as any;
-        personalProyecto.rol = pp.rol;
-        await this.personalProyectoRepository.save(personalProyecto);
-      }
-    }
-  
-    if (updateProyectoDto.clienteProyectos) {
-      await this.clienteProyectoRepository.delete({ proyecto: { id } });
-      for (const cp of updateProyectoDto.clienteProyectos) {
-        const clienteProyecto = new ClienteProyecto();
-        clienteProyecto.proyecto = proyecto; // Usa el objeto proyecto completo
-        clienteProyecto.cliente = { id: cp.clienteId } as any;
-        await this.clienteProyectoRepository.save(clienteProyecto);
-      }
-    }
-  
-    return this.findById(id);
+    return this.findById(id); 
   }
-
+  
   async delete(id: number): Promise<void> {
     const proyecto = await this.proyectoRepository.findOne({
       where: { id },
