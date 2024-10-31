@@ -10,9 +10,8 @@ export default function Footer() {
           <div>
             <h2 className="text-white text-lg font-semibold mb-2">DevEnviroment</h2>
             <p className="text-sm">Soluciones innovadoras para la gestión de proyectos</p>
-          </div>
-          
-          <div>
+          </div>          
+        <div>
             <h2 className="text-white text-lg font-semibold mb-2">Síguenos</h2>
             <div className="flex justify-center space-x-4">
               <a href="https://facebook.com" className="text-gray-400 hover:text-white transition-colors duration-300">
@@ -28,24 +27,23 @@ export default function Footer() {
                 <FaLinkedinIn className="w-5 h-5" />
               </a>
             </div>
-          </div>
-
-          <div>
+        </div>
+        <div>
             <h2 className="text-white text-lg font-semibold mb-2">Contacto</h2>
             <p className="text-sm flex items-center justify-center">
               <MdEmail className="w-4 h-4 mr-1" />
               info@devEnviroment.com
             </p>
           </div>
-        </div>
-        
+        </div>   
         <div className="border-t border-gray-800 mt-8 pt-4 text-xs text-center">
           <p>&copy; {new Date().getFullYear()} DevEnviroment. Todos los derechos reservados.</p>
           <p className="mt-1">
-            <a href="/privacy-policy" className="hover:text-white transition-colors duration-300">Privacidad</a>   | 
+            <a href="/privacy-policy" className="hover:text-white transition-colors duration-300">Privacidad</a>
+            {' | '}
             <a href="/terms-of-service" className="hover:text-white transition-colors duration-300 ml-2">Términos</a>
           </p>
-        </div>
+        </div> 
       </div>
     </footer>
   );

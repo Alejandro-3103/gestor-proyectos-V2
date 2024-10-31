@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { fetchStaffs } from '../lib/apiStaff';
+import { fetchStaffsLocalhost } from '../lib/apiStaff';
 import { fetchProyectos } from '../lib/apiProyectos';
 import { asignarStaffAProyecto, removeStaffFromProyecto, getStaffForProyecto } from '../lib/apiPersonallProyecto';
 
@@ -39,7 +39,7 @@ const StaffProyectoForm = () => {
     const loadData = async () => {
       setIsLoading(true);
       try {
-        const [staffData, proyectosData] = await Promise.all([fetchStaffs(), fetchProyectos()]);
+        const [staffData, proyectosData] = await Promise.all([fetchStaffsLocalhost(), fetchProyectos()]);
         setStaff(staffData);
         setProyectos(proyectosData);
       } catch (error) {
@@ -49,7 +49,7 @@ const StaffProyectoForm = () => {
       }
     };
     loadData();
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (selectedProyecto) {
@@ -166,8 +166,8 @@ const StaffProyectoForm = () => {
                 >
                   Remover
                 </button>
-              </li>
-            ))}
+              </li> 
+            ))} 
           </ul>
         </div>
       )}

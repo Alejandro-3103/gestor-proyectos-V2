@@ -7,6 +7,7 @@ export interface PersonalProyectoRepositoryInterface {
   find(options?: any): Promise<PersonalProyecto[]>;
   findAll(): Promise<PersonalProyecto[]>;
   findAllForProyecto(proyectoId: number): Promise<PersonalProyecto[]>;
+  findAllForStaff(staffId: number): Promise<PersonalProyecto[]>;
   findOne(id: number): Promise<PersonalProyecto>;
   update(id: number, updateClienteProyectoDto: UpdatePersonalProyectoDto): Promise<PersonalProyecto>;
   save(personalproyecto: Partial<PersonalProyecto>): Promise<PersonalProyecto>;

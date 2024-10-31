@@ -31,6 +31,13 @@ export class PersonalProyectoRepository implements PersonalProyectoRepositoryInt
       relations: ['personal'],
     });
   }
+  
+  async findAllForStaff(staffId: number): Promise<PersonalProyecto[]> {
+    return this.repository.find({
+      where: { personal: { id: staffId } },
+      relations: ['proyecto'], // Suponiendo que también deseas obtener información del proyecto
+    });
+  }
 
   async findOne(id: number): Promise<PersonalProyecto> {
     return this.repository.findOne({ where: { id }, relations: ['personal', 'proyecto'] });

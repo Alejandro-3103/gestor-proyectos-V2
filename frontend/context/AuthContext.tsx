@@ -8,7 +8,7 @@ const AuthContext = createContext<{ isAuthenticated: boolean }>({
   isAuthenticated: false,
 });
 
-// Proveedor de autenticación
+// Proveedor de autenticación  
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();

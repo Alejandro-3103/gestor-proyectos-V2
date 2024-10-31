@@ -27,6 +27,12 @@ export class PersonalProyectoController {
     return this.personalProyectoService.findAllForProyecto(+proyectoId);
   }
 
+  @Get('staff/:staffId')
+  async getAsignacionesForStaff(@Param('staffId') staffId: string) {
+    console.log(`Recibida solicitud para staff ID: ${staffId}`);
+    return this.personalProyectoService.findAllForStaff(+staffId);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersonalProyectoDto: UpdatePersonalProyectoDto) {
     return this.personalProyectoService.update(+id, updatePersonalProyectoDto);

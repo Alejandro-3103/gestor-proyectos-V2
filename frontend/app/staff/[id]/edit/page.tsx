@@ -25,7 +25,12 @@ export default function EditStaffPage({ params }: { params: Params }) {
 
   useEffect(() => {
     if (id) {
-      fetchStaff(id).then(setStaff);
+      fetchStaff(id)
+        .then(setStaff)
+        .catch(error => {
+          console.error('Error fetching staff:', error);
+          // You might want to set an error state here and display it to the user
+        });
     }
   }, [id]);
 

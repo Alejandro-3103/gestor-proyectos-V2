@@ -1,5 +1,6 @@
-"use client";
+'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,27 +9,41 @@ export default function Header() {
     setIsMenuOpen(prev => !prev);
   };
 
+  // Opciones del menú con sus respectivos enlaces
+  const menuOptions = [
+    { name: 'Proyectos', href: '/proyectos' },
+    { name: 'Staff', href: '/staff' },
+    { name: 'Clientes', href: '/clientes' },
+    { name: 'Asignaciones', href: '/asignaciones' }
+  ];
+
   return (
     <header>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           {/* Logo */}
-          <a href="#" className="flex items-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/6884/6884480.png" className="mr-3 h-6 sm:h-9" alt="Logo" />
+          <a href="/" className="flex items-center">
+            <Image 
+              src="https://cdn-icons-png.flaticon.com/512/6884/6884480.png" 
+              width={24} 
+              height={24} 
+              className="mr-3 h-6 w-auto sm:h-9" 
+              alt="Logo" 
+            />
             <span className="text-xl font-semibold dark:text-white">DevEnvironment</span>
-          </a>
-          
+          </a>         
           {/* Menú Normal (Centrado) */}
-          <div className="hidden lg:flex lg:justify-center lg:flex-grow">
+          <div className="hidden lg:flex lg:flex-grow justify-center">
             <ul className="flex space-x-8">
-              {['Home', 'Proyectos', 'Staff', 'Clientes', 'Asignaciones'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="block py-2 text-gray-700 hover:text-blue-700 transition-colors duration-300 dark:text-gray-400 dark:hover:text-white">{item}</a>
+              {menuOptions.map((item) => (
+                <li key={item.name}>
+                  <a href={item.href} className="block py-2 text-gray-700 hover:text-blue-700 transition-colors duration-300 dark:text-gray-400 dark:hover:text-white">
+                    {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
-
           {/* Botón del menú móvil */}
           <div className="flex items-center lg:hidden">
             <button 
@@ -49,13 +64,14 @@ export default function Header() {
             </button>
           </div>
         </div>
-
         {/* Menú Responsive (centrado) */}
         <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'} transition-all ease-in-out duration-300`}>
           <ul className="flex flex-col items-center mt-4 space-y-4 bg-gray-800 py-4">
-            {['Home', 'Proyectos', 'Staff', 'Clientes', 'Asignaciones'].map((item) => (
-              <li key={item}>
-                <a href="#" className="block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-700 transition-colors duration-300">{item}</a>
+            {menuOptions.map((item) => (
+              <li key={item.name}>
+                <a href={item.href} className="block py-2 pr-4 pl-3 text-white rounded hover:bg-gray-700 transition-colors duration-300">
+                  {item.name}
+                </a>
               </li>
             ))}
           </ul>

@@ -66,4 +66,13 @@ export class PersonalProyectoService {
   async findAllForProyecto(proyectoId: number): Promise<PersonalProyecto[]> {
     return this.personalProyectoRepository.findAllForProyecto(proyectoId);
   }
+
+  async findAllForStaff(staffId: number): Promise<PersonalProyecto[]> {
+    const asignaciones = await this.personalProyectoRepository.findAllForStaff(staffId);
+    if (!asignaciones.length) {
+      throw new NotFoundException(`No se encontraron asignaciones para el personal con ID ${staffId}`);
+    }
+    return asignaciones;
+  }
+  
 }

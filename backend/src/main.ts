@@ -10,12 +10,12 @@ async function bootstrap() {
   app.use(cookieParser());
   
   app.enableCors({
-    origin: 'http://localhost:3001',
+    origin: ['http://localhost:3001', 'http://frontend:3000', 'http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 
-  await app.listen(4000);
+  await app.listen(4000, '0.0.0.0');
   logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

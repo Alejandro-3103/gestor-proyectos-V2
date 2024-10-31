@@ -62,7 +62,7 @@ export class StaffController {
     // 5. Establecer la cookie con el token
     res.cookie('access_token', token, {
       httpOnly: true, // Protege la cookie para que no pueda ser accedida desde JavaScript
-      secure: this.configService.get('NODE_ENV') !== 'production', // Asegúrate de que la cookie solo se envíe en HTTPS en producción
+      secure: this.configService.get('NODE_ENV') !== 'production', // La cookie solo se envía en HTTPS en producción
       sameSite: 'strict', // La cookie solo se puede acceder desde el mismo dominio
       maxAge: 1000 * 60 * 60, // Establece el tiempo de expiración de la cookie (1 hora)
     });

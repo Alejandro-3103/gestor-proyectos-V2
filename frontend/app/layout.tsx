@@ -1,27 +1,41 @@
 // app/layout.tsx
-
-import './globals.css';  // Estilos globales, si tienes alguno
-import Header from './components/Header';  // Importamos el Header
-import Footer from './components/Footer';  // Importamos el Footer
+import './styles/style.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import { AuthProvider } from '../context/AuthContext';
 import LogoutButton from './components/LogoutButton';
+import Image from 'next/image';
+import Background from '../public/img/background.jpg';
 
 export const metadata = {
-  title: 'Gestor de Proyectos',
-  description: 'Aplicación de gestor de proyectos',
+  title: 'DevEnviroment',
+  description: 'Gestor de proyectos',
 };
-
+ 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
+  return (      
     <html lang="es">
-      <body className="layout">
-        <AuthProvider>
-          <Header  /> {/* Header */}
-            <main className="main">{children}</main> {/* El contenido de cada página */}
-            <LogoutButton />
-          <Footer /> {/* Footer */}
-        </AuthProvider>
+      <body>
+      <Header />
+      <div className="relative w-full">
+        <div className="absolute inset-0 -z-10">
+          <Image 
+              src={Background} 
+              alt="background image" 
+              className="object-cover w-full h-full" 
+              fill  
+              quality={100} 
+          />
+        </div>
+        <div className="layout">
+          <AuthProvider> 
+            <main className="main">{children}</main>
+            <LogoutButton />   
+          </AuthProvider>
+        </div>
+      </div>
+        <Footer /> 
       </body>
     </html>
   );
-}
+} 

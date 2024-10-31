@@ -19,7 +19,7 @@ interface ClienteProyecto {
   clienteId: number;
   proyectoId: number;
   fechaAsignacion: string;
-  cliente: Cliente;
+  cliente: Cliente;  
 }
 
 const ClienteProyectoForm: React.FC = () => {
@@ -122,4 +122,4 @@ const ClienteProyectoForm: React.FC = () => {
   );
 };
 
-export default ClienteProyectoForm;
+export default ClienteProyectoForm;     
